@@ -62,7 +62,7 @@
 
 #define UART_BASE	((void *)(1 << 15))
 #define UART_DATA	(0)
-#define UART_STATUS	(1)
+#define UART_STATUS	(2)
 
 #define UART_RXF_BIT	(2)
 #define UART_TXE_BIT	(3)
