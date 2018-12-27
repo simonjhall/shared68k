@@ -70,8 +70,18 @@
 
 #define HAS_I2C
 #define I2C_BASE		((unsigned char *)((1 << 15) | 2))
+
 #define I2C_SCLK_BIT	(0)
 #define I2C_SDA_BIT		(1)
+
+#define I2C_SCLK_SET	(1 << I2C_SCLK_BIT)
+#define I2C_SCLK_CLEAR	(0 << I2C_SCLK_BIT)
+
+#define I2C_SDA_SET		(1 << I2C_SDA_BIT)
+#define I2C_SDA_CLEAR	(0 << I2C_SDA_BIT)
+
+#define I2C_READ_BIT	(1)
+#define I2C_WRITE_BIT	(0)
 
 #define RAM_BASE	((void *)(1 << 23))
 #define RAM_SIZE 	(4 * 1024 * 1024)
