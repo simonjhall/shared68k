@@ -56,7 +56,7 @@
 #endif
 
 /* dynamic daddy /*/
-#if 1
+#if 0
 #define ROM_BASE	((void *)(0))
 #define ROM_SIZE	(32 * 1024)
 
@@ -87,6 +87,25 @@
 #define RAM_SIZE 	(4 * 1024 * 1024)
 
 #define LOAD_POINT	((void *)((1 << 23) | 0x100))
+#endif
+
+/* fpga 68008 /*/
+#if 1
+#define ROM_BASE	((void *)(0))
+#define ROM_SIZE	(32 * 1024)
+
+#define UART_BASE	((void *)(1 << 15))
+#define UART_DATA	(0)
+#define UART_STATUS	(2)
+
+#define UART_RXF_BIT	(2)
+#define UART_TXE_BIT	(3)
+#define UART_PWREN_BIT	(4)
+
+#define RAM_BASE	((void *)(65536))
+#define RAM_SIZE 	(32768 * 1024)
+
+#define LOAD_POINT	((void *)(RAM_BASE | 0x100))
 #endif
 
 

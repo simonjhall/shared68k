@@ -17,10 +17,12 @@ vector_table:
 #.long 0x2ffff8
 #big daddy pro
 #.long 0x4FFFF8
+#fpga 68008
+.long 0x17ff8
 #dynamic daddy
-.long  0xBFFFF8
-#.long pre_start
-.long pre_start_dynamic
+#.long  0xBFFFF8
+.long pre_start
+#.long pre_start_dynamic
 .long _bus_error
 .long _addr_error
 
