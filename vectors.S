@@ -182,6 +182,7 @@ loop:
 pre_start:
 #ifdef PRINT_ENABLE
 	movea.l #(1 << 15), %a0
+	#movea.l #0x200000, %a0
 
 	lea.l in_pre_start, %a1
 
