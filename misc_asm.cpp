@@ -163,19 +163,3 @@ unsigned int trap2(unsigned int id, unsigned int arg1, unsigned int arg2)
 	return out;
 }
 
-//void mutex_init(Mutex *p)
-//{
-//	p->i = 0;
-//}
-//
-//void mutex_lock(Mutex *p)
-//{
-//}
-//
-//void mutex_unlock(Mutex *p)
-//{
-//}
-//
-//int mutex_trylock(Mutex *p)
-//{
-//}

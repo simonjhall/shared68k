@@ -33,6 +33,16 @@ struct ExceptionState
 	{
 		return (unsigned int *)(((unsigned short *)(this + 1)) + 1);
 	}
+
+	unsigned short *GetGroup0Sr(void)
+	{
+		return (unsigned short *)(this + 1) + 4;
+	}
+
+	unsigned int *GetGroup0Pc(void)
+	{
+		return (unsigned int *)(((unsigned short *)(this + 1)) + 5);
+	}
 };
 
 static const unsigned int s_exceptionStateSize = 16 * 4;
