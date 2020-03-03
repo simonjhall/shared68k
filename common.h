@@ -90,7 +90,7 @@
 #endif
 
 /* fpga 68008 /*/
-#if 1
+#if 0
 #define ROM_BASE	((void *)(0))
 #define ROM_SIZE	(32 * 1024)
 
@@ -103,9 +103,30 @@
 #define UART_PWREN_BIT	(4)
 
 #define RAM_BASE	((void *)(65536))
-#define RAM_SIZE 	(32768 * 1024)
+#define RAM_SIZE 	(32 * 1024)
 
-#define LOAD_POINT	((void *)(RAM_BASE | 0x100))
+#define LOAD_POINT	((void *)(65536 | 0x100))
+#endif
+
+/* redux 68040 */
+#if 1
+#define ROM_BASE	((void *)(0))
+#define ROM_SIZE	(8 * 1024)
+
+#define UART_BASE	((void *)0x1000580)
+#define UART_DATA	(0)
+#define UART_STATUS	(4)
+
+#define UART_RXF_BIT	(2)
+#define UART_TXE_BIT	(3)
+
+#define RAM_BASE	((void *)0x10000)
+#define RAM_SIZE 	(32 * 1024)
+
+#define RAM2_BASE	((void *)0x10000000)
+#define RAM2_SIZE 	(128 * 1024 * 1024)
+
+#define LOAD_POINT	((void *)(0x10000 | 0x100))
 #endif
 
 

@@ -68,6 +68,7 @@ void put_string(const char *p)
 
 bool is_usb_connected(void)
 {
+#ifdef UART_PWREN_BIT
 	volatile unsigned char *pUartC = (unsigned char *)UART_BASE;
 
 	unsigned char c = pUartC[UART_STATUS];
@@ -75,6 +76,9 @@ bool is_usb_connected(void)
 		return true;
 	else
 		return false;
+#else
+	return true;
+#endif
 }
 
 bool is_data_available(void)

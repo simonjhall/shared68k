@@ -8,6 +8,8 @@
 /*#define UART_BASE	((0b001 << 21))*/
 #dynamic daddy
 /*#define UART_BASE	((1 << 15))*/
+#redux
+/*#define UART_BASE 0x1000580*/
 
 .global vector_table
 .type vector_table,%object
@@ -18,9 +20,11 @@ vector_table:
 #big daddy pro
 #.long 0x4FFFF8
 #fpga 68008
-.long 0x17ff8
+#.long 0x17ff8
 #dynamic daddy
 #.long  0xBFFFF8
+#redux
+.long 0x17ff8
 .long pre_start
 #.long pre_start_dynamic
 .long _bus_error
@@ -181,8 +185,9 @@ loop:
 
 pre_start:
 #ifdef PRINT_ENABLE
-	movea.l #(1 << 15), %a0
+	#movea.l #(1 << 15), %a0
 	#movea.l #0x200000, %a0
+	movea.l #0x1000580, %a0
 
 	lea.l in_pre_start, %a1
 
