@@ -6,7 +6,6 @@
  */
 
 #include "common.h"
-#include <string.h>
 #include <stdlib.h>
 
 extern "C" void *memset(void *block, int c, size_t size)
@@ -56,7 +55,7 @@ extern "C" int strcmp(const char *s1, const char *s2)
 }
 
 //https://www.harishnote.com/2016/06/c-programming-78-strchr-implementation.html
-const char *strchr(const char *s, int c)
+extern "C" const char *strchr(const char *s, int c)
 {
    while(*s != c && *s != '\0') {
       s++;
@@ -69,7 +68,7 @@ const char *strchr(const char *s, int c)
 }
 
 //https://codereview.stackexchange.com/questions/35396/strstr-implementation
-char* strstr(char *haystack, const char *needle) {
+extern "C" char* strstr(char *haystack, const char *needle) {
     if (haystack == NULL || needle == NULL) {
         return NULL;
     }
