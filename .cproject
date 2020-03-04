@@ -49,8 +49,8 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="cdt.managedbuild.config.gnu.cross.lib.debug.819883412.1703427697" name="vectors_risc.S" rcbsApplicability="disable" resourcePath="vectors_risc.S" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.assembler.533673216.841029758">
-						<tool id="cdt.managedbuild.tool.gnu.cross.assembler.533673216.841029758" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.533673216"/>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.lib.debug.819883412.742944460" name="vectors_risc.S" rcbsApplicability="disable" resourcePath="vectors_risc.S" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.assembler.533673216.928807424">
+						<tool id="cdt.managedbuild.tool.gnu.cross.assembler.533673216.928807424" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.533673216"/>
 					</fileInfo>
 					<sourceEntries>
 						<entry excluding="vectors_risc.S" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
@@ -107,8 +107,8 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="cdt.managedbuild.config.gnu.cross.lib.release.948276999.1976134432" name="vectors_risc.S" rcbsApplicability="disable" resourcePath="vectors_risc.S" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.assembler.1524026945.1195723817">
-						<tool id="cdt.managedbuild.tool.gnu.cross.assembler.1524026945.1195723817" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.1524026945"/>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.lib.release.948276999.1924081431" name="vectors_risc.S" rcbsApplicability="disable" resourcePath="vectors_risc.S" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.assembler.1524026945.1809442010">
+						<tool command="as" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.gnu.cross.assembler.1524026945.1809442010" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.1524026945"/>
 					</fileInfo>
 					<sourceEntries>
 						<entry excluding="vectors_risc.S" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
@@ -164,8 +164,8 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="cdt.managedbuild.config.gnu.cross.lib.debug.819883412.2944644.310593812" name="vectors_risc.S" rcbsApplicability="disable" resourcePath="vectors_risc.S" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.assembler.1999908193.1291055244">
-						<tool id="cdt.managedbuild.tool.gnu.cross.assembler.1999908193.1291055244" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.1999908193"/>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.lib.debug.819883412.2944644.1981383277" name="vectors_risc.S" rcbsApplicability="disable" resourcePath="vectors_risc.S" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.assembler.1999908193.2027629273">
+						<tool id="cdt.managedbuild.tool.gnu.cross.assembler.1999908193.2027629273" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.1999908193"/>
 					</fileInfo>
 					<sourceEntries>
 						<entry excluding="vectors_risc.S" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
@@ -221,8 +221,8 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="cdt.managedbuild.config.gnu.cross.lib.release.948276999.687442034.1669193437" name="vectors_risc.S" rcbsApplicability="disable" resourcePath="vectors_risc.S" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.assembler.63523441.1288058468">
-						<tool id="cdt.managedbuild.tool.gnu.cross.assembler.63523441.1288058468" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.63523441"/>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.lib.release.948276999.687442034.422773513" name="vectors_risc.S" rcbsApplicability="disable" resourcePath="vectors_risc.S" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.assembler.63523441.2009212270">
+						<tool id="cdt.managedbuild.tool.gnu.cross.assembler.63523441.2009212270" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.63523441"/>
 					</fileInfo>
 					<sourceEntries>
 						<entry excluding="vectors_risc.S" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
