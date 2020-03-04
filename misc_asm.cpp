@@ -187,7 +187,7 @@ unsigned int trap2(unsigned int id, unsigned int arg1, unsigned int arg2)
 						"move.l %%d0, %0\n\t"
 					: "=r" (out)
 					: "g" (id), "g" (arg1), "g" (arg2)
-					: "d0", "d1");
+					: "d0", "d1", "d2");
 
 	return out;
 #else
