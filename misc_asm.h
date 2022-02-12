@@ -8,10 +8,12 @@
 #ifndef MISC_ASM_H_
 #define MISC_ASM_H_
 
+#ifdef __m68k__
 unsigned int read_cacr(void);
 void write_cacr(unsigned int value);
 void write_sr(unsigned int value);
 unsigned int read_sr(void);
+#endif
 
 void invalidate_icache(void);
 void enable_icache(bool);
@@ -19,7 +21,7 @@ void enable_dcache(bool);
 
 bool AreInterruptsEnabled(void);
 
-void CallUserModeNoReturn(void (*pFunc)(void), unsigned short sr, void *pStack);
+void CallUserModeNoReturn(void (*pFunc)(void), unsigned long sr, void *pStack);
 
 struct Mutex
 {

@@ -8,7 +8,7 @@
 #ifndef UART_H_
 #define UART_H_
 
-#if defined SUPERVISOR_MODE
+#if (defined SUPERVISOR_MODE && defined __m68k__) || (defined MACHINE_MODE && defined __riscv)
 void put_char(char c);
 void put_hex_num(unsigned int n);
 void put_hex_byte(unsigned char n);

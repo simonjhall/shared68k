@@ -1,161 +1,141 @@
 .section ".vectors", "ax"
-
-#define PRINT_ENABLE
-
-#redux
-/*#define UART_BASE 0x1000580*/
-
-.global vector_table
-.type vector_table,%object
-vector_table:
-#redux
-.long 0x17ff8
-.long _start
-.long _bus_error
-.long _addr_error
-
-#4-7
-.long _illegal_instruction
-.long _div_zero
-.long _misc_trap
-.long _misc_trap
-
-#8-11
-.long _misc_trap
-.long _trace
-.long _misc_trap
-.long _misc_trap
-
-#12-15
-.long _misc_trap
-.long _misc_trap
-.long _misc_trap
-.long _misc_trap
-
-#16-23
-.long _misc_trap
-.long _misc_trap
-.long _misc_trap
-.long _misc_trap
-.long _misc_trap
-.long _misc_trap
-.long _misc_trap
-.long _misc_trap
-
-#23-27
-.long _spurious_int
-.long _auto_1
-.long _auto_2
-.long _auto_3
-.long _auto_4
-.long _auto_5
-.long _auto_6
-.long _auto_7
-
-#32-47
-.long _trap
-.long _trap
-.long _trap
-.long _trap
-.long _trap
-.long _trap
-.long _trap
-.long _trap
-.long _trap
-.long _trap
-.long _trap
-.long _trap
-.long _trap
-.long _trap
-.long _trap
-.long _trap
-
-.size vector_table,.-vector_table
+.global pre_start
+pre_start:
+	la x1, _fault
+	csrw mtvec, x1
+	li sp, 0x17ff8
+	jal _start
 
 .global skip_strip
 skip_strip:
 	ret
-
-.macro fault_pre
-
+	
+#if __riscv_xlen == 32
+.macro STORE reg
+	addi sp, sp, -4
+	sw \reg, 0(sp)
 .endm
 
-.macro fault_post
-
+.macro LOAD reg
+	lw \reg, 0(sp)
+	addi sp, sp, 4
 .endm
 
-_bus_error:
-	fault_pre
-	jal bus_error
-	fault_post
+#elif __riscv_xlen == 64
+	todo update for rv64, including below
+#endif
 
-_addr_error:
-	fault_pre
-	jal addr_error
-	fault_post
-
-_illegal_instruction:
-	fault_pre
-	jal illegal_instruction
-	fault_post
-
-_div_zero:
-	fault_pre
-	jal div_zero
-	fault_post
-
-_trace:
-	fault_pre
-	jal trace
-	fault_post
-
-_misc_trap:
-	fault_pre
-	jal misc_trap
-	fault_post
-
-_spurious_int:
-	fault_pre
-	jal spurious_int
-	fault_post
-
-_auto_1:
-	fault_pre
-	jal auto_1
-	fault_post
-
-_auto_2:
-	fault_pre
-	jal auto_2
-	fault_post
-
-_auto_3:
-	fault_pre
-	jal auto_3
-	fault_post
-
-_auto_4:
-	fault_pre
-	jal auto_4
-	fault_post
-
-_auto_5:
-	fault_pre
-	jal auto_5
-	fault_post
-
-_auto_6:
-	fault_pre
-	jal auto_6
-	fault_post
-
-_auto_7:
-	fault_pre
-	jal auto_7
-	fault_post
-
-_trap:
-	fault_pre
-	jal trap
-	fault_post
+_fault:
+	csrw mscratch, sp
+	li sp, 0x17ff4
+	
+	STORE x31
+	STORE x30
+	STORE x29
+	STORE x28
+	
+	STORE x27
+	STORE x26
+	STORE x25
+	STORE x24
+	
+	STORE x23
+	STORE x22
+	STORE x21
+	STORE x20
+	
+	STORE x19
+	STORE x18
+	STORE x17
+	STORE x16
+	
+	STORE x15
+	STORE x14
+	STORE x13
+	STORE x12
+	
+	STORE x11
+	STORE x10
+	STORE x9
+	STORE x8
+	
+	STORE x7
+	STORE x6
+	STORE x5
+	STORE x4
+	
+	STORE x3
+	STORE x2
+	STORE x1
+	STORE x0
+	
+	csrr t0, mscratch
+	sw t0, 32*4(sp)
+	
+	csrr t0, mepc
+	sw t0, 33*4(sp)
+	
+	csrr t0, mstatus
+	sw t0, 34*4(sp)
+	
+	mv a0, sp
+	addi sp, sp, -4
+	csrr a1, mcause
+	
+	jal interrupt_exception
+	
+	addi sp, sp, 4
+	
+	lw t0, 34*4(sp)
+	csrw mstatus, t0
+	
+	lw t0, 33*4(sp)
+	csrw mepc, t0
+	
+	lw t0, 32*4(sp)
+	csrw mscratch, t0
+	
+	LOAD x0
+	LOAD x1
+	LOAD x2
+	LOAD x3
+	
+	LOAD x4
+	LOAD x5
+	LOAD x6
+	LOAD x7
+	
+	LOAD x8
+	LOAD x9
+	LOAD x10
+	LOAD x11
+	
+	LOAD x12
+	LOAD x13
+	LOAD x14
+	LOAD x15
+	
+	LOAD x16
+	LOAD x17
+	LOAD x18
+	LOAD x19
+	
+	LOAD x20
+	LOAD x21
+	LOAD x22
+	LOAD x23
+	
+	LOAD x24
+	LOAD x25
+	LOAD x26
+	LOAD x27
+	
+	LOAD x28
+	LOAD x29
+	LOAD x30
+	LOAD x31
+	
+	csrr sp, mscratch
+	
+	mret
 

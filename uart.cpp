@@ -9,7 +9,7 @@
 #include "inter_process.h"
 #include "common.h"
 
-#if defined SUPERVISOR_MODE
+#if (defined SUPERVISOR_MODE && defined __m68k__) || (defined MACHINE_MODE && defined __riscv)
 void put_char(char c)
 {
 	volatile char *pUart = (char *)UART_BASE;
@@ -42,7 +42,6 @@ void put_hex_byte(unsigned char n)
 
 void put_dec_short_num(unsigned short i, bool leading)
 {
-#ifdef __m68k__
 	bool has_printed = leading;
 	for (short count = 4; count >= 0; count--)
 	{
@@ -59,10 +58,6 @@ void put_dec_short_num(unsigned short i, bool leading)
 			put_char(div + '0');
 		}
 	}
-#else
-	put_char('-');
-	put_char('1');
-#endif
 }
 
 void put_string(const char *p)
