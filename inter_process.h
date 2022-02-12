@@ -8,6 +8,8 @@
 #ifndef INTER_PROCESS_H_
 #define INTER_PROCESS_H_
 
+#include <stdint.h>
+
 #define TRAP_PRINT_CHAR				0
 #define TRAP_PRINT_HEX_NUM			1
 #define TRAP_PRINT_HEX_BYTE			2
@@ -16,6 +18,7 @@
 
 #define DEBUGGER_UPDATE 100
 
+#ifdef __m68k__
 struct ExceptionState
 {
 	unsigned int usp;
@@ -69,6 +72,89 @@ struct Hooks
 
 static const unsigned int s_hooksSize = 15 * 4;
 static_assert(sizeof(Hooks) == s_hooksSize, "structure size change");
+
+#elif __riscv
+
+struct ExceptionState
+{
+	unsigned long regs_int[32];
+	unsigned long sp;
+	unsigned long pc;
+	unsigned long status;
+	
+	unsigned long *GetPc(void)
+	{
+		return &pc; 
+	}
+	
+	unsigned long *GetSr(void)
+	{
+		return &status;
+	}
+	
+	/*unsigned int usp;
+	unsigned int d[8];
+	unsigned int a[7];
+	//and then the cpu-pushed state
+
+	//does not work for address/bus exceptions on the '000
+	unsigned short *GetSr(void)
+	{
+		return (unsigned short *)(this + 1);
+	}
+
+	unsigned int *GetPc(void)
+	{
+		return (unsigned int *)(((unsigned short *)(this + 1)) + 1);
+	}
+
+	unsigned short *GetGroup0Sr(void)
+	{
+		return (unsigned short *)(this + 1) + 4;
+	}
+
+	unsigned int *GetGroup0Pc(void)
+	{
+		return (unsigned int *)(((unsigned short *)(this + 1)) + 5);
+	}*/
+};
+
+static const unsigned int s_exceptionStateSize = 35 * 4;
+static_assert(sizeof(ExceptionState) == s_exceptionStateSize, "structure size change");
+
+struct Hooks
+{
+	//interrupts
+	void (*SuperSoftInt)(ExceptionState *pState);
+	void (*MachSoftInt)(ExceptionState *pState);
+	void (*SuperTimerInt)(ExceptionState *pState);
+	void (*MachTimerInt)(ExceptionState *pState);
+	void (*SuperExtInt)(ExceptionState *pState);
+	void (*MachExtInt)(ExceptionState *pState);
+	
+	//exceptions
+	void (*InstAddrMisaligned)(ExceptionState *pState);
+	void (*InstAddrFault)(ExceptionState *pState);
+	void (*IllegalInst)(ExceptionState *pState);
+	void (*Breakpoint)(ExceptionState *pState);
+	void (*LoadAddrMisaligned)(ExceptionState *pState);
+	void (*LoadAddrFault)(ExceptionState *pState);
+	void (*StoreAddrMisaligned)(ExceptionState *pState);
+	void (*StoreAddrFault)(ExceptionState *pState);
+	void (*EcallFromU)(ExceptionState *pState);
+	void (*EcallFromS)(ExceptionState *pState);
+	void (*EcallFromM)(ExceptionState *pState);
+	void (*InstPageFault)(ExceptionState *pState);
+	void (*LoadPageFault)(ExceptionState *pState);
+	void (*StorePageFault)(ExceptionState *pState);
+};
+
+static const uintptr_t s_hooksSize = 20 * sizeof(uintptr_t);
+static_assert(sizeof(Hooks) == s_hooksSize, "structure size change");
+
+#else
+#error unexpected platform
+#endif
 
 Hooks *GetHooks(void);
 
