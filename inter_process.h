@@ -10,13 +10,13 @@
 
 #include <stdint.h>
 
-#define TRAP_PRINT_CHAR				0
-#define TRAP_PRINT_HEX_NUM			1
-#define TRAP_PRINT_HEX_BYTE			2
-#define TRAP_PRINT_DEC_SHORT_NUM	3
-#define TRAP_PRINT_STRING			4
+#define TRAP_PRINT_CHAR				1000
+#define TRAP_PRINT_HEX_NUM			1001
+#define TRAP_PRINT_HEX_BYTE			1002
+#define TRAP_PRINT_DEC_SHORT_NUM	1003
+#define TRAP_PRINT_STRING			1004
 
-#define DEBUGGER_UPDATE 100
+#define DEBUGGER_UPDATE 1100
 
 #ifdef __m68k__
 struct ExceptionState
