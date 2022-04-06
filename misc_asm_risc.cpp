@@ -71,6 +71,7 @@ void CallUserModeNoReturn(void (*pFunc)(void), unsigned long sr, void *pStack)
 					"csrw mstatus, t0\n\t"
 					"mv t0, %0\n\t"
 					"csrw mepc, t0\n\t"
+					"nop\n\t"
 					"mret\n\t"
 					:
 					: "r" (pFunc), "r" (sr), "r" (pStack));
