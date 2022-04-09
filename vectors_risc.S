@@ -70,12 +70,15 @@ _fault:
 	STORE x0
 	
 	csrr t0, mscratch
+	nop
 	sw t0, 32*4(sp)
 	
 	csrr t0, mepc
+	nop
 	sw t0, 33*4(sp)
 	
 	csrr t0, mstatus
+	nop
 	sw t0, 34*4(sp)
 	
 	mv a0, sp
