@@ -8,6 +8,8 @@
 #ifndef COMMON_H_
 #define COMMON_H_
 
+#define WORD_BYTE_SWAP(x) ((x) >> 24) | ((((x) >> 16) & 0xff) << 8) | ((((x) >> 8) & 0xff) << 16) | (((x) & 0xff) << 24)
+
 /* big ham origins */
 #if 0
 #define ROM_BASE	((void *)(0))
@@ -113,20 +115,35 @@
 #define ROM_BASE	((void *)(0))
 #define ROM_SIZE	(8 * 1024)
 
-#define UART_BASE	((void *)0x1000580)
+#define UART_BASE	((void *)0x1000588)
 #define UART_DATA	(0)
 #define UART_STATUS	(4)
 
 #define UART_RXF_BIT	(2)
 #define UART_TXE_BIT	(3)
 
-#define RAM_BASE	((void *)0x10000)
-#define RAM_SIZE 	(32 * 1024)
+#define HAS_I2C
+#define I2C_BASE		((unsigned char *)0x1000584)
 
-#define RAM2_BASE	((void *)0x10000000)
-#define RAM2_SIZE 	(128 * 1024 * 1024)
+#define I2C_SCLK_BIT	(0)
+#define I2C_SDA_BIT		(1)
 
-#define LOAD_POINT	((void *)(0x10000 | 0x100))
+#define I2C_SCLK_SET	(1 << I2C_SCLK_BIT)
+#define I2C_SCLK_CLEAR	(0 << I2C_SCLK_BIT)
+
+#define I2C_SDA_SET		(1 << I2C_SDA_BIT)
+#define I2C_SDA_CLEAR	(0 << I2C_SDA_BIT)
+
+#define I2C_READ_BIT	(1)
+#define I2C_WRITE_BIT	(0)
+
+#define HAS_CYCLE_COUNTER
+#define CYCLE_COUNTER ((unsigned int *)0x1000600)
+
+#define RAM_BASE	((void *)0x10000000)
+#define RAM_SIZE 	(128 * 1024 * 1024)
+
+#define LOAD_POINT	((void *)(0x10000000 | 0x100))
 #endif
 
 

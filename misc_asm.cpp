@@ -12,7 +12,7 @@
 
 void write_cacr(unsigned int value)
 {
-#ifdef __mc68030__
+#ifdef __mc68030__ || __mc68040__
 	__asm__ __volatile__ (
 						"move.l %0, %%d0\n\t"
 						"movc %%d0, %%cacr\n\t"
@@ -25,7 +25,7 @@ void write_cacr(unsigned int value)
 
 unsigned int read_cacr(void)
 {
-#if __mc68030__
+#if __mc68030__ || __mc68040__
 	unsigned int out;
 	__asm__ __volatile(
 			"movc %%cacr, %%d0\n\t"
@@ -118,10 +118,12 @@ void CallUserModeNoReturn(void (*pFunc)(void), unsigned short sr, void *pStack)
 	{
 		volatile unsigned short m_sr;
 		volatile unsigned int m_pc;
+		volatile unsigned int m_vec_offset;
 	} ret;
 
 	ret.m_sr = sr;
 	ret.m_pc = (unsigned int)pFunc;
+	ret.m_vec_offset = 0;
 
 	__asm__ __volatile (
 					"move.l %1, %%a0\n\t"

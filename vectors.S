@@ -24,7 +24,8 @@ vector_table:
 #dynamic daddy
 #.long  0xBFFFF8
 #redux
-.long 0x17ff8
+#32KB of initial stack
+.long 0x10007ff8
 .long pre_start
 #.long pre_start_dynamic
 .long _bus_error
@@ -187,7 +188,7 @@ pre_start:
 #ifdef PRINT_ENABLE
 	#movea.l #(1 << 15), %a0
 	#movea.l #0x200000, %a0
-	movea.l #0x1000580, %a0
+	movea.l #0x1000588, %a0
 
 	lea.l in_pre_start, %a1
 
@@ -198,6 +199,17 @@ pre_start_loop:
 
 	bne pre_start_loop
 #endif
+
+	movea.l %sp, %a0
+	movea.l #0x10000000, %a1
+	move.l #0, %d0
+
+pre_start_clear:
+	move.l %d0, %a1@+
+	cmpa.l %a1, %a0
+
+	bne pre_start_clear
+
 	jmp _start
 
 .global skip_strip

@@ -87,3 +87,19 @@ extern "C" char* strstr(char *haystack, const char *needle) {
     }
     return NULL;
 }
+
+extern "C" char *strcpy(char *dest, const char *src)
+{
+	char *d = dest;
+	char c;
+	do
+	{
+		c = *src;
+		*d = c;
+
+		src++;
+		d++;
+	} while (c != 0);
+
+	return dest;
+}

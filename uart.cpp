@@ -8,10 +8,13 @@
 #include "misc_asm.h"
 #include "inter_process.h"
 #include "common.h"
+#include "uart.h"
 
 #if defined SUPERVISOR_MODE
 void put_char(char c)
 {
+	while (!is_space_available());
+
 	volatile char *pUart = (char *)UART_BASE;
 	pUart[UART_DATA] = c;
 }
@@ -94,6 +97,18 @@ bool is_data_available(void)
 
 	if (c & (1 << UART_RXF_BIT))
 		return false;				//bit set = no data
+	else
+		return true;
+}
+
+bool is_space_available(void)
+{
+	volatile unsigned char *pUartC = (unsigned char *)UART_BASE;
+
+	volatile unsigned char c = pUartC[UART_STATUS];
+
+	if (c & (1 << UART_TXE_BIT))
+		return false;				//bit set = no space
 	else
 		return true;
 }
