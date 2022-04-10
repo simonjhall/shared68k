@@ -1,0 +1,27 @@
+PREFIX=m68k-linux-gnu-
+ARGS = -fno-rtti -fno-exceptions -mcpu=68040  -O3 -g
+
+ARGS += -DSUPERVISOR_MODE -fno-builtin
+
+.SECONDARY:
+
+all: shared.a
+
+shared.a: common.o crc32.o inter_process.o uart.o vectors.o misc_asm_68k.o
+	$(PREFIX)ar rc $@ $^
+
+clean:
+	rm -f *.bin *.o *.elf *.a
+
+%.bin: %.elf
+	$(PREFIX)objcopy -O binary $^ $@
+
+%.o: %.cpp $(HEADERS) Makefile_m68k
+	$(PREFIX)g++ $< -c -o $@ -g -std=c++14 -Wall $(ARGS)
+
+%.o: %.S
+	$(PREFIX)g++ $< -c -o $@ -g
+
+%.elf: %.o
+	$(PREFIX)g++ $^ -o $@ -g -std=c++14 -Wall $(ARGS) -nostartfiles
+
