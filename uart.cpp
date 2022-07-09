@@ -88,7 +88,7 @@ bool is_data_available(void)
 {
 	volatile unsigned char *pUartC = (unsigned char *)UART_BASE;
 
-	volatile unsigned char c = pUartC[UART_STATUS];
+	unsigned char c = pUartC[UART_STATUS];
 
 	if (c & (1 << UART_RXF_BIT))
 		return false;				//bit set = no data
@@ -100,7 +100,7 @@ bool is_space_available(void)
 {
 	volatile unsigned char *pUartC = (unsigned char *)UART_BASE;
 
-	volatile unsigned char c = pUartC[UART_STATUS];
+	unsigned char c = pUartC[UART_STATUS];
 
 	if (c & (1 << UART_TXE_BIT))
 		return false;				//bit set = no space
