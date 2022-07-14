@@ -115,7 +115,7 @@
 #define ROM_BASE	((void *)(0))
 #define ROM_SIZE	(8 * 1024)
 
-#define UART_BASE	((void *)0x1000588)
+#define UART_BASE	((void *)0x1000580)
 #define UART_DATA	(0)
 #define UART_STATUS	(4)
 
