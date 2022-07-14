@@ -3,7 +3,7 @@
 pre_start:
 	la x1, _fault
 	csrw mtvec, x1
-	li sp, 0x17ff8
+	li sp, 0x100FFFFC
 	jal _start
 
 .global skip_strip
@@ -27,7 +27,7 @@ skip_strip:
 
 _fault:
 	csrw mscratch, sp
-	li sp, 0x17ff4
+	li sp, 0x100FFFFC
 	
 	STORE x31
 	STORE x30
