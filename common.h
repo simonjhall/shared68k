@@ -144,6 +144,12 @@
 #define RAM_SIZE 	(128 * 1024 * 1024)
 
 #define LOAD_POINT	((void *)(0x10000000 | 0x100))
+
+#define HAS_SPI
+#define SPI_BASE		((void *)0x1000500)
+#define SPI_CLOCK_CS	(0)
+#define SPI_DATA		(4)
+
 #endif
 
 

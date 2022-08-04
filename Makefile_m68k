@@ -7,7 +7,7 @@ ARGS += -DSUPERVISOR_MODE -fno-builtin
 
 all: shared.a
 
-shared.a: common.o crc32.o inter_process.o uart.o vectors.o misc_asm_68k.o
+shared.a: common.o crc32.o inter_process.o uart.o vectors.o misc_asm_68k.o spi.o
 	$(PREFIX)ar rc $@ $^
 
 clean:
