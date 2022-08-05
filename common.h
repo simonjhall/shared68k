@@ -110,7 +110,7 @@
 #define LOAD_POINT	((void *)(65536 | 0x100))
 #endif
 
-/* redux 68040 */
+/* redux 68040 and risc-v */
 #if 1
 #define ROM_BASE	((void *)(0))
 #define ROM_SIZE	(8 * 1024)

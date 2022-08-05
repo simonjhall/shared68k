@@ -6,9 +6,9 @@
  */
 
 #include "misc_asm.h"
-#include "inter_process.h"
 #include "common.h"
 #include "uart.h"
+#include "inter_process.h"
 
 #if (defined SUPERVISOR_MODE && defined __m68k__) || (defined MACHINE_MODE && defined __riscv)
 void put_char(char c)

@@ -156,6 +156,9 @@ static_assert(sizeof(Hooks) == s_hooksSize, "structure size change");
 #error unexpected platform
 #endif
 
-Hooks *GetHooks(void);
+static inline Hooks *GetHooks(void)
+{
+	return (Hooks *)RAM_BASE;
+}
 
 #endif /* INTER_PROCESS_H_ */

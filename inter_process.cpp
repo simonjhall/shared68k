@@ -8,7 +8,4 @@
 #include "common.h"
 #include "inter_process.h"
 
-Hooks *GetHooks(void)
-{
-	return (Hooks *)RAM_BASE;
-}
+
