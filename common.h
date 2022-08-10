@@ -138,7 +138,7 @@
 #define I2C_WRITE_BIT	(0)
 
 #define HAS_CYCLE_COUNTER
-#define CYCLE_COUNTER ((unsigned int *)0x1000600)
+#define CYCLE_COUNTER ((volatile unsigned int *)0x1000600)
 
 #define RAM_BASE	((void *)0x10000000)
 #define RAM_SIZE 	(128 * 1024 * 1024)
