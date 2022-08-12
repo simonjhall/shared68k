@@ -253,6 +253,9 @@ SdCard::Error SdCard::Init(void)
 	//deselect the card
 	m_selected = false;
 	spi_set_clock_cs(m_currentClockDivider, m_selected);
+
+	//and change the speed up
+	m_currentClockDivider = m_maxClockDivider;
 	
 	return kErrorNoError;
 }
@@ -333,4 +336,59 @@ unsigned int SdCard::HzToClockDivider(unsigned int hz)
 		return 127;
 	else
 		return div;
+}
+
+bool SdCard::ReadBlock(unsigned char *pBuffer, unsigned int block)
+{
+	//select the card
+	m_selected = true;
+	spi_set_clock_cs(m_currentClockDivider, m_selected);
+
+	unsigned char ret;
+	if (m_type == kCardTypeHighCapacityV2)
+		ret = SendCommand(kCmd17, block);
+	else
+		ret = SendCommand(kCmd17, block << 9);
+	
+	//needs to be "ready"
+	if (ret)
+	{
+		//deselect the card
+		m_selected = false;
+		spi_set_clock_cs(m_currentClockDivider, m_selected);
+		
+		return false;
+	}
+	
+	unsigned int start_time = *CYCLE_COUNTER;
+
+	//wait for the start token
+	while (spi_send_receive(0xff) != 0xfe)
+	{
+		unsigned int current_time = *CYCLE_COUNTER;
+		if (current_time - start_time > kReadTimeout)
+		{
+			//deselect the card
+			m_selected = false;
+			spi_set_clock_cs(m_currentClockDivider, m_selected);
+			
+			return false;
+		}
+	}
+
+	//receive the data
+	for (int count = 0; count < 512; count++)
+	{
+		pBuffer[count] = spi_send_receive(0xff);
+	}
+
+	//ignore the crc
+	spi_send_receive(0xff);
+	spi_send_receive(0xff);
+
+	//deselect the card
+	m_selected = false;
+	spi_set_clock_cs(m_currentClockDivider, m_selected);
+
+	return true;
 }

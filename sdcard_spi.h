@@ -15,7 +15,7 @@ public:
 	};
 
 	Error Init(void);
-	bool ReadBlock(char *pBuffer, unsigned int block);
+	bool ReadBlock(unsigned char *pBuffer, unsigned int block);
 
 	static const unsigned int kBlockSize = 512;
 
