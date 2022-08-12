@@ -28,6 +28,9 @@ private:
 	static const unsigned int kFullSpeedHz	= 4000000;
 
 	//time-outs
+	// static const unsigned int kInitTimeout = kSocSpeedHz / 10;
+	// static const unsigned int kReadTimeout = kSocSpeedHz / 10;
+	// static const unsigned int kIdleTimeout = kSocSpeedHz / 10;
 	static const unsigned int kInitTimeout = kSocSpeedHz * 2;
 	static const unsigned int kReadTimeout = kSocSpeedHz / 3;
 	static const unsigned int kIdleTimeout = kSocSpeedHz / 3;

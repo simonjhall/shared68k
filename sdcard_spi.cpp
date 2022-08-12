@@ -212,7 +212,7 @@ SdCard::Error SdCard::Init(void)
 	{
 		// Card returns 'in_idle_state'=1
 
-		//wait for cardto become ready
+		//wait for card to become ready
 		//could also check for illegal command -> not SD card
 
 		unsigned int current_time = *CYCLE_COUNTER;
@@ -280,7 +280,8 @@ unsigned char SdCard::SendCommand(unsigned int command, unsigned int arg)
 	spi_send_receive((arg >>  8) & 0xff);
 	spi_send_receive((arg >>  0) & 0xff);
 
-	unsigned char crc = 0;
+	unsigned char crc = 1;		//set end bit
+
 	if (kWithCrcSupport)
 	{
 		unsigned int crcval = 0x00U;
