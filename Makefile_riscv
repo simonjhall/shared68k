@@ -8,7 +8,7 @@ ARGS += -DMACHINE_MODE -fno-builtin
 
 all: shared.a
 
-shared.a: common.o crc32.o inter_process.o uart.o vectors_risc.o misc_asm_risc.o spi.o sdcard_spi.o
+shared.a: common.o crc32.o inter_process.o uart.o vectors_risc.o misc_asm_risc.o spi.o sdcard_spi.o MBR.o
 	$(PREFIX)ar rc $@ $^
 
 clean:
