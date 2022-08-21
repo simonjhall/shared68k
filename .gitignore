@@ -3,3 +3,5 @@
 /Release_Super/
 /Release_User/
 /Release_Super_RiscV/
+*.o
+*.a
