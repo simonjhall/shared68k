@@ -26,13 +26,13 @@ public:
 			m_pRoot = 0;
 		}
 
-		// bool ReadBlock(unsigned char *pBuffer, unsigned int block)
-		// {
-		// 	if (!m_pRoot)
-		// 		return false;
+		inline bool ReadDataFromLogicalAddress(unsigned int address, void *pDest, unsigned int byteCount)
+		{
+			if (!m_pRoot)
+				return false;
 
-		// 	return m_pRoot->ReadDataFromLogicalAddress(address + m_offset, pDest, byteCount);
-		// }
+			return m_pRoot->ReadDataFromLogicalAddress(address + m_offset, pDest, byteCount);
+		}
 
 	private:
 		SdCard *m_pRoot;

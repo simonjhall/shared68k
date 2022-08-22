@@ -16,6 +16,7 @@ public:
 
 	Error Init(void);
 	bool ReadBlock(unsigned char *pBuffer, unsigned int block);
+	bool ReadDataFromLogicalAddress(unsigned int address, void *pDest, unsigned int byteCount);
 
 	static const unsigned int kBlockSize = 512;
 
