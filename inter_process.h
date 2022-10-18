@@ -77,6 +77,7 @@ static_assert(sizeof(Hooks) == s_hooksSize, "structure size change");
 
 struct ExceptionState
 {
+	//no state is saved by the cpu - this is all written by code
 	unsigned long regs_int[32];
 	unsigned long sp;
 	unsigned long pc;
@@ -91,32 +92,6 @@ struct ExceptionState
 	{
 		return &status;
 	}
-	
-	/*unsigned int usp;
-	unsigned int d[8];
-	unsigned int a[7];
-	//and then the cpu-pushed state
-
-	//does not work for address/bus exceptions on the '000
-	unsigned short *GetSr(void)
-	{
-		return (unsigned short *)(this + 1);
-	}
-
-	unsigned int *GetPc(void)
-	{
-		return (unsigned int *)(((unsigned short *)(this + 1)) + 1);
-	}
-
-	unsigned short *GetGroup0Sr(void)
-	{
-		return (unsigned short *)(this + 1) + 4;
-	}
-
-	unsigned int *GetGroup0Pc(void)
-	{
-		return (unsigned int *)(((unsigned short *)(this + 1)) + 5);
-	}*/
 };
 
 static const unsigned int s_exceptionStateSize = 35 * 4;
