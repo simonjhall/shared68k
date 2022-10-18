@@ -141,8 +141,12 @@
 #define CYCLE_COUNTER ((volatile unsigned int *)0x1000600)
 
 #define RAM_BASE	((void *)0x10000000)
-#define RAM_SIZE 	(128 * 1024 * 1024)
+//full board memory map
+// #define RAM_SIZE 	(128 * 1024 * 1024)
+//ebay board
+#define RAM_SIZE 	(16 * 1024 * 1024)
 
+//needs to be aligned to 32 byte for clearing
 #define LOAD_POINT	((void *)(0x10000000 | 0x100))
 
 #define HAS_SPI
