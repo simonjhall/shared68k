@@ -37,4 +37,13 @@ unsigned int trap0(unsigned int id);
 unsigned int trap1(unsigned int id, unsigned int arg1);
 unsigned int trap2(unsigned int id, unsigned int arg1, unsigned int arg2);
 
+#if __riscv
+unsigned int read_mie(void);
+unsigned int read_mip(void);
+unsigned int read_mstatus(void);
+
+void write_mie(unsigned int);
+void write_mstatus(unsigned int);
+#endif
+
 #endif /* MISC_ASM_H_ */

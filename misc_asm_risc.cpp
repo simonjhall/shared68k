@@ -85,3 +85,57 @@ void enable_icache(bool)
 {
 }
 
+unsigned int read_mie(void)
+{
+	unsigned int value;
+	__asm__ __volatile__ (
+						"csrr %0, mie\n"
+					: "=r" (value)
+					: 
+					: );
+
+	return value;
+}
+
+unsigned int read_mip(void)
+{
+	unsigned int value;
+	__asm__ __volatile__ (
+						"csrr %0, mip\n"
+					: "=r" (value)
+					: 
+					: );
+
+	return value;
+}
+
+unsigned int read_mstatus(void)
+{
+	unsigned int value;
+	__asm__ __volatile__ (
+						"csrr %0, mstatus\n"
+					: "=r" (value)
+					: 
+					: );
+
+	return value;
+}
+
+void write_mie(unsigned int mask)
+{
+	__asm__ __volatile__ (
+						"csrw mie, %0\n"
+					: 
+					: "r" (mask)
+					: );
+}
+
+void write_mstatus(unsigned int status)
+{
+	__asm__ __volatile__ (
+						"csrw mstatus, %0\n"
+					: 
+					: "r" (status)
+					: );
+}
+
