@@ -143,7 +143,7 @@
 #define RAM_BASE	((void *)0x10000000)
 //full board memory map
 // #define RAM_SIZE 	(128 * 1024 * 1024)
-//ebay board
+//ebay board - todo change this to 32 MB!
 #define RAM_SIZE 	(16 * 1024 * 1024)
 
 //needs to be aligned to 32 byte for clearing
