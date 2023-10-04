@@ -122,9 +122,14 @@ struct Hooks
 	void (*InstPageFault)(ExceptionState *pState);
 	void (*LoadPageFault)(ExceptionState *pState);
 	void (*StorePageFault)(ExceptionState *pState);
+
+	//functions called from rom/uart loader scope
+	void (*EnableICache)(bool e);
+	void (*InvalidateICache)(void);
+	void (*FlushDCache)(bool invalidate);
 };
 
-static const uintptr_t s_hooksSize = 20 * sizeof(uintptr_t);
+static const uintptr_t s_hooksSize = 23 * sizeof(uintptr_t);
 static_assert(sizeof(Hooks) == s_hooksSize, "structure size change");
 
 #else

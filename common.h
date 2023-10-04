@@ -154,6 +154,9 @@
 #define SPI_CLOCK_CS	(0)
 #define SPI_DATA		(4)
 
+#define HAS_ICACHE
+#define HAS_DCACHE
+
 #endif
 
 

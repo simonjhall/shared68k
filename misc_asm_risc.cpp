@@ -5,9 +5,12 @@
  *      Author: simon
  */
 
+#include <stdint.h>
+
 #include "misc_asm.h"
 #include "uart.h"
 #include "common.h"
+#include "inter_process.h"
 
 unsigned int trap0(unsigned int id)
 {
@@ -77,12 +80,101 @@ void CallUserModeNoReturn(void (*pFunc)(void), unsigned long sr, void *pStack)
 					: "r" (pFunc), "r" (sr), "r" (pStack));
 }
 
-void invalidate_icache(void)
+//https://stackoverflow.com/questions/18350021/how-to-print-exact-value-of-the-program-counter-in-c
+__attribute__ ((__noinline__))
+static uintptr_t get_pc () { return (uintptr_t)__builtin_return_address(0); }
+
+void flush_dcache(bool invalidate)
 {
+#ifdef HAS_DCACHE
+	if (get_pc() < ((uintptr_t)ROM_BASE + ROM_SIZE))
+	{
+		const unsigned int flush_shift = 10;
+		const unsigned int invalidate_shift = 11;
+		const unsigned int line_log = 10;
+
+		//update each line
+		for (unsigned int count = 0; count < (1 << line_log); count++)
+		{
+			unsigned int control = ((invalidate ? 1 : 0) << invalidate_shift) | (1 << flush_shift) | count;
+
+			__asm__ __volatile__ (
+								"csrw 0x7c1, %0\n"
+							: 
+							: "r" (control)
+							: );
+		}
+
+		unsigned int disable = 0;
+
+		__asm__ __volatile__ (
+							"csrw 0x7c1, %0\n"
+						: 
+						: "r" (disable)
+						: );
+	}
+	else
+		GetHooks()->FlushDCache(invalidate);
+#endif
 }
 
-void enable_icache(bool)
+void invalidate_icache(void)
 {
+#ifdef HAS_ICACHE
+	if (get_pc() < ((uintptr_t)ROM_BASE + ROM_SIZE))
+	{
+		flush_dcache(false);
+
+		const unsigned int valid_shift = 10;
+		const unsigned int sel_shift = 11;
+		const unsigned int line_log = 10;
+
+		//clear each line
+		for (unsigned int count = 0; count < (1 << line_log); count++)
+		{
+			unsigned int control = (0 << valid_shift) | (1 << sel_shift) | count;
+
+			__asm__ __volatile__ (
+								"csrw 0x7c0, %0\n"
+							: 
+							: "r" (control)
+							: );
+		}
+
+		//turn it back on
+		unsigned int enable = 1 << valid_shift;
+
+		__asm__ __volatile__ (
+							"csrw 0x7c0, %0\n"
+						: 
+						: "r" (enable)
+						: );
+	}
+	else
+		GetHooks()->InvalidateICache();
+#endif
+}
+
+void enable_icache(bool e)
+{
+#ifdef HAS_ICACHE
+	if (get_pc() < ((uintptr_t)ROM_BASE + ROM_SIZE))
+	{
+		ASSERT(e);			//can only enable
+
+		const unsigned int valid_shift = 10;
+		const unsigned int sel_shift = 11;
+		unsigned int enable = 1 << valid_shift;
+
+		__asm__ __volatile__ (
+							"csrw 0x7c0, %0\n"
+						: 
+						: "r" (enable)
+						: );
+	}
+	else
+		GetHooks()->EnableICache(e);
+#endif
 }
 
 unsigned int read_mie(void)

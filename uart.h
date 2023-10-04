@@ -8,6 +8,10 @@
 #ifndef UART_H_
 #define UART_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if (defined SUPERVISOR_MODE && defined __m68k__) || (defined MACHINE_MODE && defined __riscv)
 void put_char(char c);
 void put_hex_num(unsigned int n);
@@ -39,6 +43,10 @@ inline void put_string_n_user(const char *p, unsigned int n)
 	for (unsigned int count = 0; count < n; count++)
 		put_char_user(p[count]);
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 
 #endif /* UART_H_ */

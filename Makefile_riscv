@@ -1,6 +1,7 @@
 PREFIX=~/riscv-linux32/bin/riscv32-unknown-linux-gnu-
-ARGS = -fno-rtti -fno-exceptions -march=rv32im -mabi=ilp32 -Os -g -mno-div -ffunction-sections
+ARGS = -march=rv32im_zicsr -mabi=ilp32 -Os -g -mno-div -ffunction-sections
 # ARGS = -fno-rtti -fno-exceptions -march=rv64imac -mabi=lp64  -O3 -g
+CPPARGS = -fno-rtti -fno-exceptions
 
 ARGS += -DMACHINE_MODE -fno-builtin
 
@@ -18,10 +19,10 @@ clean:
 	$(PREFIX)objcopy -O binary $^ $@
 
 %.o: %.cpp $(HEADERS) Makefile_riscv
-	$(PREFIX)c++ $< -c -o $@ -g -std=c++14 -Wall $(ARGS)
+	$(PREFIX)c++ $< -c -o $@ -g -std=c++14 -Wall $(ARGS) $(CPPARGS)
 
 %.o: %.S
-	$(PREFIX)c++ $< -c -o $@ -g
+	$(PREFIX)c++ $< -c -o $@ -g  $(ARGS)
 
 %.elf: %.o
 	$(PREFIX)c++ $^ -o $@ -g -std=c++14 -Wall $(ARGS) -nostartfiles

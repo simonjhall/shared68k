@@ -18,6 +18,7 @@ unsigned int read_sr(void);
 void invalidate_icache(void);
 void enable_icache(bool);
 void enable_dcache(bool);
+void flush_dcache(bool invalidate);
 
 bool AreInterruptsEnabled(void);
 
