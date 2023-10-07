@@ -103,15 +103,19 @@ void flush_dcache(bool invalidate)
 							: 
 							: "r" (control)
 							: );
+
+			//wait for the flush to finish before continuing
+			unsigned int status;
+			do
+			{
+				__asm__ __volatile__ (
+									"csrr %0, 0x7c1\n"
+								: "=r" (status) 
+								:
+								: );
+			}
+			while (status);
 		}
-
-		unsigned int disable = 0;
-
-		__asm__ __volatile__ (
-							"csrw 0x7c1, %0\n"
-						: 
-						: "r" (disable)
-						: );
 	}
 	else
 		GetHooks()->FlushDCache(invalidate);
