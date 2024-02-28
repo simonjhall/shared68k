@@ -5,20 +5,25 @@ CPPARGS = -fno-rtti -fno-exceptions
 
 ARGS += -DMACHINE_MODE -fno-builtin
 
-.SECONDARY:
+HEADERS = FatFS.h common.h inter_process.h sdcard_spi.h spi.h MBR.h crc32.h misc_asm.h uart.h
+SOURCE_CPP = FatFS.cpp common.cpp inter_process.cpp misc_asm_risc.cpp spi.cpp MBR.cpp crc32.cpp misc_asm_68k.cpp sdcard_spi.cpp uart.cpp
+SOURCE_ASM = vectors.S vectors_risc.S
 
-all: shared.a
+all: shared.a shared_gitrev.h
 
 shared.a: common.o crc32.o inter_process.o uart.o vectors_risc.o misc_asm_risc.o spi.o sdcard_spi.o MBR.o FatFS.o
 	$(PREFIX)ar rc $@ $^
 
 clean:
-	rm -f *.bin *.o *.elf *.a
+	rm -f *.bin *.o *.elf *.a shared_gitrev.h
 
 %.bin: %.elf
 	$(PREFIX)objcopy -O binary $^ $@
 
-%.o: %.cpp $(HEADERS) Makefile_riscv
+shared_gitrev.h: $(HEADERS) $(SOURCE_ASM) $(SOURCE_CPP)
+	bash gitrev.sh
+
+%.o: %.cpp $(HEADERS) shared_gitrev.h Makefile_riscv
 	$(PREFIX)c++ $< -c -o $@ -g -std=c++14 -Wall $(ARGS) $(CPPARGS)
 
 %.o: %.S
