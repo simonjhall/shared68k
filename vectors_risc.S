@@ -4,6 +4,25 @@ pre_start:
 	la x1, _fault
 	csrw mtvec, x1
 	li sp, 0x100FFFFC
+
+#todo clean up this stuff and somehow use defines
+	la t0, 0x10000000 | 0x100
+	la t1, 0x10000000 | (16 * 1024 * 1024)
+1:
+	sw zero, 0(t0)
+	sw zero, 4(t0)
+	sw zero, 8(t0)
+	sw zero, 12(t0)
+
+	sw zero, 16(t0)
+	sw zero, 20(t0)
+	sw zero, 24(t0)
+	sw zero, 28(t0)
+
+	add t0, t0, 32
+
+	bne t0, t1, 1b
+
 	jal _start
 
 .global skip_strip
