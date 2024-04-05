@@ -157,6 +157,9 @@
 #define HAS_ICACHE
 #define HAS_DCACHE
 
+#define HAS_LED_BUTTON
+#define LED_BUTTON_BASE		((void *)0x1000400)
+
 #endif
 
 
