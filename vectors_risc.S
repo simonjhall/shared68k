@@ -6,6 +6,11 @@ pre_start:
 	li sp, 0x100FFFFC
 
 #todo clean up this stuff and somehow use defines
+	la t0, 0x1000400
+	lw t0, 0(t0)
+	andi t0, t0, 2
+	bne t0, zero, skip_zero
+
 	la t0, 0x10000000 | 0x100
 	la t1, 0x10000000 | (16 * 1024 * 1024)
 1:
@@ -22,6 +27,7 @@ pre_start:
 	add t0, t0, 32
 
 	bne t0, t1, 1b
+skip_zero:
 
 	jal _start
 
